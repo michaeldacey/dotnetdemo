@@ -1,0 +1,68 @@
+# dotnet demo workflow file
+name: dotnet build and deploy to Azure Web App
+
+on: 
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+# Provide default shell and working-directory options for all run
+# steps in all jobs.
+defaults:
+  run:
+    shell: bash
+    working-directory: ./myapp      
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '8.0.x' ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup dotnet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Debug
+
+      - name: Store the built application as an artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: myapp
+          path: app-${{ matrix.dotnet-version }}
+
+    #   - name: Test the dotnet code
+    #     run: dotnet test --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
+    #   # Store the test results as an artifact
+    #   - name: Upload dotnet test results
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: dotnet-results-${{ matrix.dotnet-version }}
+    #       path: TestResults-${{ matrix.dotnet-version }}
+    #       # Use always() to always run this step to publish test results when there are test failures
+    #     if: ${{ always() }}        
+
+  # Deploy a new release as a nuget package to GitHub Package Registry
+#   deploy_nuget_packege:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       packages: write
+#       contents: read
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-dotnet@v3
+#         with:
+#           dotnet-version: '6.0.x' # SDK Version to use.
+#           source-url: https://nuget.pkg.github.com/<owner>/index.json
+#         env:
+#           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#       - run: dotnet build --configuration Release <my project>
+#       - name: Create the package
+#         run: dotnet pack --configuration Release <my project>
+#       - name: Publish the package to GPR
+#         run: dotnet nuget push <my project>/bin/Release/*.nupkg
