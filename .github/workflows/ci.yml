@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: myapp
-          path: app-${{ matrix.dotnet-version }}
+          path: .
 
     #   - name: Test the dotnet code
     #     run: dotnet test --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
