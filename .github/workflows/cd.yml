@@ -3,6 +3,8 @@ on:
       workflows: [dotnet build and deploy to Azure Web App]
       types: [completed]
       branches: [main]
+env:
+  GH_TOKEN: ${{ secrets.GH_PAT }}
 jobs:
   deploy:
     runs-on: ubuntu-latest
