@@ -1,6 +1,6 @@
 on:
     workflow_run:
-      workflows: [build]
+      workflows: [buildotnet build and deploy to Azure Web Appd]
       types: [completed]
       branches: [main]
 jobs:
