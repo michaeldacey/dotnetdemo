@@ -6,6 +6,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+env:
+  AZURE_WEBAPP_NAME: my-app-name
+  AZURE_WEBAPP_PACKAGE_PATH: '.' # Path to the publish output folder, defaults to the repository root
+
 # Provide default shell and working-directory options for all run
 # steps in all jobs.
 defaults:
@@ -29,11 +33,13 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Debug
+      - name: Publish each project to a child directory named "publish"
+        run: dotnet publish -c Release --property:PublishDir='${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish'
 
       - name: Store the built application as an artifact
         uses: actions/upload-artifact@v3
         with:
-          name: myapp
+          name: myappartifact
           path: .
 
     #   - name: Test the dotnet code

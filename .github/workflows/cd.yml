@@ -1,0 +1,23 @@
+on:
+    workflow_run:
+      workflows: [build]
+      types: [completed]
+      branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: none
+    steps:
+      - name: Get the latest Run ID for ci.yml build workflow
+        run: echo "RUN_ID=gh run --repo michaeldacey/dotnetdemo list --workflow ci.yml --json databaseId --jq .[0].databaseId" >> $GITHUB_ENV
+      - name: Dowload the artifact from the build workflow
+        uses: actions/download-artifact@v4
+        with:
+          name: myappartifact
+          # token with actions:read permissions on target repo
+          github-token: ${{ secrets.GITHUB_PAT }} 
+          repository: michaeldacey/dotnetdemo
+          run-id: ${{env.RUN_ID}}
+  
