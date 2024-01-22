@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Get the latest Run ID for ci.yml build workflow
         run: echo "RUN_ID=gh run --repo michaeldacey/dotnetdemo list --workflow ci.yml --json databaseId --jq .[0].databaseId" >> $GITHUB_ENV
+      - name: Run ID is
+        run: echo "Run ID is ${{RUN_ID}}"
       - name: Dowload the artifact from the build workflow
         uses: actions/download-artifact@v4
         with:
