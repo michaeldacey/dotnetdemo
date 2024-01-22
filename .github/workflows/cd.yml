@@ -17,7 +17,7 @@ jobs:
         with:
           name: myappartifact
           # token with actions:read permissions on target repo
-          github-token: ${{ secrets.GITHUB_PAT }} 
+          github-token: ${{ secrets.GH_PAT }} 
           repository: michaeldacey/dotnetdemo
           run-id: ${{env.RUN_ID}}
   
