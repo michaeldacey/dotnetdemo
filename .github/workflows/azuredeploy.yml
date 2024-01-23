@@ -1,4 +1,4 @@
-name: Web App Deployment Demo
+name: Azure Web App Deployment
 
 # Using workload identity federation to authenticate to Azure
 permissions:
