@@ -16,9 +16,7 @@ jobs:
         run: |
           a=$(gh run --repo michaeldacey/dotnetdemo list --workflow ci.yml --json databaseId --jq .[0].databaseId)&&echo "RUN_ID=$a" >> $GITHUB_ENV
           echo $a
-      - name: Run ID is
-        run: echo "Run ID is ${{env.RUN_ID}}"
-      - name: Dowload the artifact from the build workflow
+      - name: Download the artifact from the build workflow
         uses: actions/download-artifact@v4
         with:
           name: myappartifact
