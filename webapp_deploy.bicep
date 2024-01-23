@@ -36,7 +36,7 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
           // To point your app code to the right port, use the PORT environment variable.
           // See https://learn.microsoft.com/en-us/troubleshoot/azure/app-service/faqs-app-service-linux#how-do-i-specify-port-in-my-linux-container-
           name: 'PORT'
-          value: 80
+          value: "80"
         }
         {
           name: 'NODE_ENV'
