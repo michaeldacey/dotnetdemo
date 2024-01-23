@@ -1,3 +1,5 @@
+name: deploy to Azure Web App
+
 on:
     workflow_run:
       workflows: [dotnet build and deploy to Azure Web App]
@@ -37,7 +39,7 @@ jobs:
 
       - name: Deploy to Web App
         id: deploy-to-webapp
-        uses: actions/webapps-deploy@v2
+        uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           package: api/publish
