@@ -12,6 +12,7 @@ env:
 defaults:
   run:
     shell: bash 
+    working-directory: .
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -40,7 +41,8 @@ jobs:
           tenant-id: ${{secrets.AZURE_TENANT_ID}}
           subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
 
-      - run: |
+      - name: Dump artifact for debugging
+        run: |
           ls -la
           ls -la ./api
 
@@ -49,7 +51,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish'
-        env:
-          working-directory: ./api
+          package: 'api/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish'
+
           
