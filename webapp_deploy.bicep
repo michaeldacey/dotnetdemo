@@ -30,6 +30,7 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
       linuxFxVersion: runtime 
       minTlsVersion: '1.2'
       ftpsState: 'FtpsOnly'
+      http20Enabled: true
       appSettings: [
         {
           // For Linx containers. 
@@ -39,7 +40,7 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
           value: '80'
         }
       ]
-      publicNetworkAccess: 'Enabled'
+      publicNetworkAccess: 'Enabled' 
     }
     httpsOnly: false
     clientAffinityEnabled: false
