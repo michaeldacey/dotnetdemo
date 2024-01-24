@@ -40,6 +40,8 @@ jobs:
           tenant-id: ${{secrets.AZURE_TENANT_ID}}
           subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
 
+      - run: ls -la
+
       - name: Deploy to Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
